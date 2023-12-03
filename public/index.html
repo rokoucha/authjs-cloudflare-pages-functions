@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Auth.js + Cloudflare Pages Functions</title>
+    <script async type="module">
+      const session = await fetch(
+        new URL("/auth/session", window.location.origin)
+      )
+        .then((res) => res.json())
+        .catch(() => null);
+
+      const e = document.getElementById("session");
+      if (e) {
+        e.textContent = JSON.stringify(session, null, 2);
+      } else {
+        document.addEventListener("DOMContentLoaded", () => {
+          const e = document.getElementById("session");
+          if (!e) return;
+
+          e.textContent = JSON.stringify(session, null, 2);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Auth.js + Cloudflare Pages Functions</h1>
+    <pre id="session"></pre>
+    <a href="/protected">See protected page</a>
+    <a href="/auth/signin/github">Sign in</a>
+    <a href="/auth/signout">Sign out</a>
+  </body>
+</html>
